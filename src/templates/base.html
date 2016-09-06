@@ -14,6 +14,7 @@
 <style>
 {% block style %}{% endblock style %}
 </style>
+{% block head_extra %}{% endblock head_extra %}
 </head>
 <body>
 <div id="fb-root"></div>
@@ -35,7 +36,25 @@ fjs.parentNode.insertBefore(js, fjs);
 
 
 <!-- Latest compiled and minified JavaScript -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+		$(".content-markdown").each(function(){
+			var content = $(this).text()
+			console.log(content)
+			var markedContent = marked(content)
+			$(this).html(markedContent)
+		})
+		$(".content-markdown img").each(function(){
+			$(this).addClass("img-responsive")
+		})
+	})
+</script>
+
 </body>
 </html>
 

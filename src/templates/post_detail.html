@@ -41,15 +41,13 @@ Linkedin
 
 </p> -->
 <div class='row'>
-<div class='col-sm-12'>
+	<div class='col-sm-12'>
+		<div class="content-markdown">{{ instance.content }}</div>
+	<hr/>
+	<br/>
+	<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
 
-{{ instance.content|linebreaks }}
-
-<hr/>
-<br/>
-<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
-
-</div>
+	</div>
 </div>
 </div>
 
