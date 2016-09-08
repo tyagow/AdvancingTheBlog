@@ -9,7 +9,7 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <link rel='stylesheet' href='{% static "css/base.css" %}' />
 <style>
 {% block style %}{% endblock style %}
@@ -41,18 +41,49 @@ fjs.parentNode.insertBefore(js, fjs);
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <script type="text/javascript" charset="utf-8">
-	$(document).ready(function(){
-		$(".content-markdown").each(function(){
-			var content = $(this).text()
-			console.log(content)
-			var markedContent = marked(content)
-			$(this).html(markedContent)
-		})
-		$(".content-markdown img").each(function(){
-			$(this).addClass("img-responsive")
-		})
-	})
+	$(document).ready(function() {
+        $(".content-markdown").each(function () {
+            var content = $(this).text()
+            var markedContent = marked(content)
+            $(this).html(markedContent)
+        })
+        $(".post-detail-item img").each(function () {
+            $(this).addClass("img-responsive")
+        })
+        var contentIput = $("#id_content");
+
+        function setContent(value) {
+            var markedContent = marked(value);
+            $("#preview-content").html(markedContent);
+            $("#preview-content img").each(function () {
+                $(this).addClass("img-responsive");
+            })
+
+        }
+
+        setContent(contentIput.val());
+
+        contentIput.keyup(function () {
+            var newContent = $(this).val();
+            setContent(newContent);
+        })
+
+        var titleInput = $("#id_title");
+
+        function setTitle(value) {
+            $("#preview-title").text(value)
+        }
+        setTitle(titleInput.val())
+
+        $("#preview-title").text(titleInput.val())
+        titleInput.keyup(function () {
+            var newTitle = $(this).val()
+            setTitle(newTitle)
+        })
+
+    })
 </script>
 
 </body>

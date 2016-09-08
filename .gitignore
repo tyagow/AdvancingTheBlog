@@ -3,7 +3,8 @@ include/
 lib/
 pip-selfcheck.json
 local/
-
+static_cdn/
+.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
