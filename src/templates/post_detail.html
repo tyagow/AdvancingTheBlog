@@ -4,7 +4,9 @@
 {% block head_title %}
 {{ instance.title }} | {{ block.super }}
 {% endblock head_title %}
-
+{% block post_detail_link %}
+    <li><a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a></li>
+{% endblock %}
 
 
 {% block content %}
@@ -13,6 +15,7 @@
     <img src='{{ instance.image.url }}' class='img-responsive' />
     {% endif %}
 <h1>{{ title }} <small>{% if instance.draft %}<span style='color:red;'>Draft</span> {% endif %}{{ instance.publish }}</small></h1>
+<p>Read Time: {% if instance.read_time <= 1 %} < 1 Minute {% else %}{{ instance.read_time }} minutes{% endif %}</p>
 {% if instance.user.get_full_name %}
 <p>Author: {{ instance.user.get_full_name }}</p>
 {% endif %}
@@ -47,10 +50,14 @@ Linkedin
         <br/>
         <div>
             <p class="lead">Comments</p>
+        {% if request.user.is_authenticated %}
             <form method="POST">{% csrf_token %}
                 {{ comment_form|crispy }}
                 <input type="submit" value="Post comment" class="btn btn-default">
             </form>
+        {% else %}
+        <p>You must log in to comment</p>
+        {% endif %}
             {% for comment in comments %}
                 <blockquote>
                     <p>{{ comment.content }}</p>
@@ -62,11 +69,16 @@ Linkedin
                                 <footer>via {{ child_comment.user }} | {{ child_comment.timestamp|timesince }} ago</footer>
                             </blockquote>
                         {% endfor %}
-                        <form method="POST">{% csrf_token %}
-                            {{ comment_form|crispy }}
-                            <input type="hidden" name="parent_id" value='{{ comment.id }}'>
-                            <input type="submit" value="Post comment" class="btn btn-default">
-                        </form>
+                        {% if request.user.is_authenticated %}
+
+                            <form method="POST">{% csrf_token %}
+                                {{ comment_form|crispy }}
+                                <input type="hidden" name="parent_id" value='{{ comment.id }}'>
+                                <input type="submit" value="Post comment" class="btn btn-default">
+                            </form>
+                        {% else %}
+                            <p>You must log in to comment</p>
+                        {% endif %}
                     </div>
 
 
@@ -74,7 +86,7 @@ Linkedin
                 <hr/>
             {% endfor %}
         </div>
-{#        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>#}
+        {#        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>#}
 
     </div>
 </div>
