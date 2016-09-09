@@ -5,3 +5,6 @@ h1 {
 	margin-left: 0px !important;
 	margin-right: 0px !important;
 }
+.comment-reply {
+	display: none;
+}
